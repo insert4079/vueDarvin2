@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<svg width="640" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
+ <defs>
+  <symbol id="svg_2" viewBox="0 0 512.005 512.005" x="0px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" y="0px">
+   <g>
+    <g>
+     <path d="m505.749,475.587l-145.6,-145.6c28.203,-34.837 45.184,-79.104 45.184,-127.317c0,-111.744 -90.923,-202.667 -202.667,-202.667s-202.666,90.922 -202.666,202.666s90.923,202.667 202.667,202.667c48.213,0 92.48,-16.981 127.317,-45.184l145.6,145.6c4.16,4.16 9.621,6.251 15.083,6.251s10.923,-2.091 15.083,-6.251c8.341,-8.341 8.341,-21.824 -0.001,-30.165zm-303.082,-112.918c-88.235,0 -160,-71.765 -160,-160s71.765,-160 160,-160s160,71.765 160,160s-71.766,160 -160,160z"/>
+    </g>
+   </g>
+   <g/>
+   <g/>
+   <g/>
+   <g/>
+   <g/>
+   <g/>
+   <g/>
+   <g/>
+   <g/>
+   <g/>
+   <g/>
+   <g/>
+   <g/>
+   <g/>
+   <g/>
+  </symbol>
+ </defs>
+ <g class="layer">
+  <title>Layer 1</title>
+  <use fill="#ffffff" id="svg_3" stroke-width="0" transform="matrix(0.312497 0 0 0.312497 0 0)" x="606.805469" xlink:href="#svg_2" y="464.004558"/>
+  <g id="svg_4"/>
+ </g>
+</svg>
