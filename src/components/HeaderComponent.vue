@@ -8,7 +8,13 @@
     </router-link>
     <div class="header__wrapper">
       <div class="header__links">
-        <a v-for="i in headerNav"  href="#" class="header__link">{{ i }}</a>
+        <router-link
+            class="header__link"
+            :to="i.headerNavLink"
+            v-for="i in headerNav"
+        >
+          {{ i.headerNavName }}
+        </router-link>
       </div>
       <div class="header__burger">
         <div class="header__burger-menu burger-menu">
@@ -23,28 +29,85 @@
 
 
   <nav class="nav padding">
-    <div class="nav__menu">
-      <div class="nav__menu_burg"></div>
+    <div
+        class="nav__menu"
+        @mouseenter="catalogFlag = true"
+        @mouseleave="catalogFlag = false"
+    >
+<!--      <div class="nav__menu_burg"></div>-->
       <div class="nav__menu_text">каталог</div>
-      <div class="nav__tree tree">
-        <div class="tree__menu">
-          <p class="tree__menu-item">Здесь цикл</p>
-        </div>
-        <div class="tree__submenu">
-          <div class="tree__wrapper">
-            <p>Декоративные растения</p>
-            <a href="#">Здесь цикл</a>
-          </div>
-        </div>
-      </div>
+
+
+      <ul class="nav__tree tree" v-show="catalogFlag">  <!--Выпадающий список (ад ебаный)-->
+        <li
+            class="tree__menu-item"
+            v-for="i in fallingCatalog"
+
+            @mouseenter="subCatalogFlag = true"
+            @mouseleave="subCatalogFlag = false"
+        >
+          {{i.groupName}}
+
+          <ul
+              v-show="subCatalogFlag"
+
+          >
+            <li
+                @mouseenter="subSubCatalogFlag = true"
+                @mouseleave="subSubCatalogFlag = false"
+                v-for="j in i.subGroup"
+            >
+              {{j.subGroupName}}
+
+              <ul
+                  v-for="k in j.subGroupList"
+                  v-show="subSubCatalogFlag"
+              >
+                <li
+                    @mouseenter="productFlag = true"
+                    @mouseleave="productFlag = false"
+                >
+                  {{k.subGroupListName}}
+                  <ul
+                      v-show="productFlag"
+                      v-for="hey in k.productList"
+                  >
+                    <li>
+                      <router-link :to="`/catalog/${hey.productLatin}/`">{{hey.productName}}</router-link>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
+
+
     <div class="nav__search">
       <form class="nav__form">
-        <input class="nav__input" type="search" placeholder="Поиск товара" />
-        <a href="#">
-          <i class="fa fa-search fa-lg"></i>
-        </a>
+        <input
+            @focus="searchFlag = true"
+            @blur="searchFlagDisable"
+            v-model="searchValue"
+            class="nav__input"
+            type="search"
+            placeholder="Введите название товара"
+        />
+        <ul v-show="searchFlag" class="nav__search-item" >
+          <li v-for="product in filteredArticles.slice(0, 5)"> <!-- максимальное отображение элементов поиска - 5-->
+            <router-link
+                :to="`/catalog/${product.productLatin}`"
+                @click="dropSearchValue"
+
+            >
+              {{ product.productName }}
+            </router-link>
+          </li>
+        </ul>
       </form>
+
       <div class="nav__icons">
         <router-link to="/catalog/">Каталог</router-link>
         <router-link to="/basket/" id="basket">
@@ -59,18 +122,89 @@
 
 <script>
 import {mapGetters} from 'vuex'
+import About from "./links/About";
 
 export default {
   name: "Header",
   data(){
     return{
-      headerNav: ['О нас', 'Акции', 'Доставка', 'Отзывы', 'Партнерам', 'Контакты']
+      // headerNav: ['О нас', 'Акции', 'Доставка', 'Отзывы', 'Партнерам', 'Контакты'],
+      headerNav: [
+        {
+          headerNavName: 'О нас',
+          headerNavLink: 'about'
+        },
+        {
+          headerNavName: 'Акции',
+          headerNavLink: 'sale'
+        },
+        {
+          headerNavName: 'Доставка',
+          headerNavLink: 'delivery'
+        },
+        {
+          headerNavName: 'Отзывы',
+          headerNavLink: 'reviews'
+        },
+        {
+          headerNavName: 'Партнерам',
+          headerNavLink: 'partners'
+        },
+        {
+          headerNavName: 'Контакты',
+          headerNavLink: 'contacts'
+        }
+      ],
+      searchValue: '',
+      searchFlag: false,        //Нужно для отображения элементов поиска при фокусе на инпуте
+      catalogFlag: false,       //На каждую итерацию сделал по такому значению. Возможно, есть другой подход,
+      subCatalogFlag: false,    //но мне он пока неизвестен
+      subSubCatalogFlag: false,
+      productFlag: false
+    }
+  },
+  components: {},
+  methods: {
+    searchFlagDisable: function (){ //Нужен, чтобы можно было успеть перейти по ссылке в поиске, иначе
+      setTimeout(() => {     //searchFlag = false происходит так быстро, что ссылка не срабатывает
+        this.searchValue = ''
+        this. searchFlag = false
+      }, 200)
+    },
+    dropSearchValue: function (){
+
     }
   },
   computed: {
     ...mapGetters([
-        'CART'
-    ])
+        'CART',
+        'GET_PRODUCT_LIST',
+        'PRODUCTS'
+    ]),
+    filteredArticles: function () {
+      let searchValue = this.searchValue.toLowerCase()
+      if (!searchValue){
+        return this.GET_PRODUCT_LIST
+      } else {
+        return this.GET_PRODUCT_LIST.filter(product => product.productName.toLowerCase().includes(searchValue))
+      }
+    },
+
+    // filteredArticles: function () {
+    //   let searchValue = this.searchValue.toLowerCase()
+    //   if (!this.searchValue){
+    //     return this.GET_PRODUCT_LIST
+    //   } else {
+    //     return this.GET_PRODUCT_LIST.filter(product => product.productName.includes(this.searchValue))
+    //   }
+    // },
+    fallingCatalog: function (){
+      // console.log(this.PRODUCTS)
+      return this.PRODUCTS
+    },
+    debug: function (e){
+      console.log(e)
+    }
   }
 }
 </script>
@@ -227,6 +361,7 @@ a
     align-items: center
     padding-left: 20px
     width: 100%
+    position: relative
     @media ( max-width: 500px )
       width: 80%
       justify-content: center
@@ -263,6 +398,11 @@ a
       &::-webkit-search-results-button,
       &::-webkit-search-results-decoration
         display: none
+    &-item
+      background-color: #fff
+      position: absolute
+      top: 100%
+      left: 0
   &__ul
     position: fixed
   &__icons
@@ -293,52 +433,11 @@ a
     color: #fff
 
 .tree
-  z-index: 110
+  position: absolute
+  top: 100%
   &__menu
-    position: absolute
-    top: 100%
-    left: 0
-    right: 0
-    background-color: #fff
-    display: none
-    & p
-      padding: 10px 5px
-      margin: 0
-      transition: 0.2s all
-      &:hover
-        background-color: $grey
-  &__submenu
-    background-color: #fff
-    position: absolute
-    top: 100%
-    left: 100%
-    width: 65vw
-    //display: flex
-    justify-content: flex-start
-    flex-wrap: wrap
-    cursor: auto
-    padding: 0 50px 50px 30px
-    display: none
-    overflow: hidden
-    @media ( max-width: 500px )
-      width: 100vw
-      top: 0
-      left: 0
-      justify-content: space-around
-      padding: 0
-      overflow: scroll
-    & p
-      font-weight: 700
-    & a
-      display: block
-      margin-bottom: 5px
-      transition: 0.2s all
-      &:first-child
-        margin-top: 20px
-      &:hover
-        color: $orange
-  &__wrapper
-    margin-right: 10px
-    width: 45%
+    &-item
+      border: 1px solid black
+      background-color: #fff
 
 </style>

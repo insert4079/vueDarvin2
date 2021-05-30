@@ -4,7 +4,7 @@
 
     <div class="catalog__block">
       <template v-for="productName in GET_PRODUCT_LIST">
-        <router-link  class="catalog__link" :to="`${productName.productLatin}`">
+        <router-link  class="catalog__link" :to="`/catalog/${productName.productLatin}`">
           <img class="catalog__img" :src="productName.productImg" alt="">
           <p>{{ productName.productName }}</p>
         </router-link>
@@ -23,6 +23,7 @@ export default {
   components: {
     Cart
   },
+
   data(){
     return{
       result: []
@@ -33,9 +34,6 @@ export default {
       console.log(e)
     },
 
-    linkClick: function (e){
-      console.log(e)
-    }
   },
   computed: {
     ...mapGetters([

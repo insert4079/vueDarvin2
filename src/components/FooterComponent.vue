@@ -3,15 +3,20 @@
   <footer class="footer padding">
     <div class="footer__top">
       <div  class="footer__links">
-        <a v-for="i in footerNav" class="footer__link" href="#">{{ i }}</a>
+        <router-link
+            class="footer__link"
+            v-for="i in footerNav"
+            :to="i.headerNavLink"
+        >
+          {{ i.headerNavName }}
+        </router-link>
       </div>
       <div class="footer__downloads">
         <a v-for="i in download" target="_blank" class="footer__download" :href="download[i.downloadId].downloadLink">
-          <img class="footer__download_img" :src="imgUrl(download[i.downloadId].downloadImg)" alt="Google Play" />
+          <img class="footer__download_img" src="imgUrl(download[i.downloadId].downloadImg)" alt="Google Play" />
           <div class="footer__download_text"><span>Загрузите</span><span>в <strong>Google Play</strong></span></div>
         </a>
       </div>
-
 
 
       <div class="footer__contacts">
@@ -71,7 +76,44 @@ export default {
           downloadLink: 'https://www.apple.com/ru/app-store/'
         }
       ],
-      footerNav: ['Каталог', 'О нас', 'Акции', 'Доставка', 'Отзывы', 'Партнерам', 'Вакансии', 'FAQ', 'Контакты']
+      footerNav: [
+        {
+          headerNavName: 'Каталог',
+          headerNavLink: 'catalog'
+        },
+        {
+          headerNavName: 'О нас',
+          headerNavLink: 'about'
+        },
+        {
+          headerNavName: 'Акции',
+          headerNavLink: 'sale'
+        },
+        {
+          headerNavName: 'Доставка',
+          headerNavLink: 'delivery'
+        },
+        {
+          headerNavName: 'Отзывы',
+          headerNavLink: 'reviews'
+        },
+        {
+          headerNavName: 'Партнерам',
+          headerNavLink: 'partners'
+        },
+        {
+          headerNavName: 'Вакансии',
+          headerNavLink: 'vacancies'
+        },
+        {
+          headerNavName: 'FAQ',
+          headerNavLink: 'faq'
+        },
+        {
+          headerNavName: 'Контакты',
+          headerNavLink: 'contacts'
+        }
+      ],
     }
   },
   methods: {

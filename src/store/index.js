@@ -355,9 +355,7 @@ let store = new Vuex.Store({
         ]
       }
     ],
-    cart: [
-
-    ]
+    cart: []
   },
   getters: {
     PRODUCTS(state){
@@ -383,14 +381,51 @@ let store = new Vuex.Store({
       return result;
     },
 
+    GET_CART_TOTAL(state){
+      let result = 0;
+      state.cart.forEach(e => result +=(e.productPrice * e.productCount));
+      return result;
+    }
   },
   mutations: {
     SET_CART: (state, product) => {
-      state.cart.push(product)
-    }
+      if(state.cart.length){
+        let isProductExistts = false;
+        state.cart.map(function (item){
+          if (item.productLatin === product.productLatin){
+            isProductExistts = true;
+            item.productCount++
+          }
+        })
+        if(!isProductExistts){
+          state.cart.push(product)
+        }
+      } else {
+        state.cart.push(product)
+      }
+    },
+    REMOVE_FROM_CART: (state, index) =>{
+      state.cart.splice(index, 1)
+    },
+
   },
   actions: {
+    ADD_TO_CART({commit}, product){
+      commit('SET_CART', product)
+    },
+    DELETE_FROM_CART({commit}, index){
+      commit('REMOVE_FROM_CART', index)
+    },
+    GET_CURRENT_PRODUCT(){
+      return this.GET_PRODUCT_LIST.find(e => e.productLatin === this.productId)
+    },
+    DELETE_FROM_CART_IF_COUNT_0({commit}, index){
+      // console.log(this.state.cart[index].productCount)
+      if(!this.state.cart[index].productCount){
+        commit('REMOVE_FROM_CART', index)
+      }
 
+    }
   },
   modules: {
   }

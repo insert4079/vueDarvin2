@@ -44,9 +44,9 @@
           </div>
         </div>
         <div class="leaders__block_bot leaders__block_toggle-bot">
-          <div @click="" class="leaders__block_add">
+          <div @click="addToCart" class="leaders__block_add">
             <div class="leaders__block_plus"></div>
-            <div @click="addToCart" class="leaders__block_basket">Добавить в корзину</div>
+            <div class="leaders__block_basket">Добавить в корзину</div>
           </div>
         </div>
       </div>
@@ -124,7 +124,10 @@
 <script>
 import Vue from 'vue'
 import Vuex from "vuex";
-Vue.use(Vuex)
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/swiper-bundle.css'
+
+Vue.use(Vuex, VueAwesomeSwiper)
 
 import Cart from "./Cart";
 import {mapGetters, mapActions} from 'vuex';
@@ -555,22 +558,33 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'ADD_TO_CART'
+    ]),
+
+    addToCart(e) { //топорно, но работает. Нахожу название товара через таргет и по этому названию нахожу нужный объект
+      let currentProductName = e.target.parentNode.parentNode.parentNode.querySelector('.leaders__block_name').innerHTML
+      let currentProduct = this.GET_PRODUCT_LIST.find(e => e.productName === currentProductName)
+
+      if (!this.CART.includes(currentProduct)) {
+        this.$set(currentProduct, 'productCount', 1)
+        this.ADD_TO_CART(currentProduct)
+      } else {
+        this.ADD_TO_CART(currentProduct)
+      }
+    },
+
+
     imgUrl: function (path) {     //Функция для доступа к картинкам через относительный путь
       return images('./' + path)
     },
-    addToCart(data) {
-      // this.ADD_TO_CART(data)
-      console.log(data)
-    }
+
   },
   computed: {
     ...mapGetters([
       'CART',
       'PRODUCTS',
       'GET_PRODUCT_LIST'
-    ]),
-    ...mapActions([
-        'ADD_TO_CART'
     ])
   }
 }

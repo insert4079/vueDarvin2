@@ -3,7 +3,7 @@
     <HeaderComponent></HeaderComponent>
 
     <router-view></router-view>
-<!--    <FooterComponent></FooterComponent>-->
+    <FooterComponent></FooterComponent>
   </div>
 </template>
 
