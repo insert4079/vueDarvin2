@@ -1,6 +1,8 @@
 <template>
-  <div class="reviews">
-    <h1>Reviews</h1>
+  <div class="reviews padding">
+    <h1>Отзывы</h1>
+
+    <p>Отзывов пока нет, но скоро вы сможете оставить свой первый <3</p>
   </div>
 </template>
 

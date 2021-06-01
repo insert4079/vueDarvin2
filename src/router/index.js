@@ -5,13 +5,15 @@ import Catalog from "../views/Catalog";
 import ProductInfo from "../views/ProductInfo";
 import Cart from "../views/Cart";
 import About from "../components/links/About";
-import Sale from "../components/links/Sale";
 import Delivery from "../components/links/Delivery";
 import Reviews from "../components/links/Reviews";
 import Partners from "../components/links/Partners";
 import Contacts from "../components/links/Contacts";
 import Vacancies from "../components/links/Vacancies";
 import FAQ from "../components/links/FAQ";
+import Basil from "../components/articles/Basil";
+import Juniper from "../components/articles/Juniper";
+import Sycamore from "../components/articles/Sycamore";
 import Vuex from "vuex";
 
 Vue.use(VueRouter);
@@ -40,14 +42,9 @@ const routes = [
     component: Cart
   },
   {
-    path: '/about/',
+    path: '/about//',
     name: 'About',
     component: About
-  },
-  {
-    path: '/sale/',
-    name: 'Sale',
-    component: Sale
   },
   {
     path: '/delivery/',
@@ -79,12 +76,32 @@ const routes = [
     name: 'FAQ',
     component: FAQ
   },
+  {
+    path: '/basil/',
+    name: 'Basil',
+    component: Basil
+  },
+  {
+    path: '/juniper/',
+    name: 'Juniper',
+    component: Juniper
+  },
+  {
+    path: '/sycamore/',
+    name: 'Sycamore',
+    component: Sycamore
+  },
+
+
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  }
 })
 
 export default router

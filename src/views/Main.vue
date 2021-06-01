@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 <template>
 <div class="main">
 
@@ -16,16 +8,28 @@
           {{ promo.promoLinkText }}
         </router-link>
       </div>
-      <img class="promo__photo" :src="imgUrl(promo.promoImg)" alt="Цветы" />
+      <img
+          class="promo__photo"
+          :src="imgUrl(promo.promoImg)"
+          alt="Цветы" />
     </div>
   </div>
 
 
   <div class="ours padding">
     <div class="ours__blocks">
-      <a v-for="i in ours" class="ours__block" href="#">
+      <a
+          class="ours__block"
+          v-for="i in ours"
+          :href="i.oursItemLink"
+          target="_blank"
+      >
         <div class="ours__block_title">{{ i.oursItemName }}</div>
-        <img class="ours__block_img" :src="imgUrl(ours[i.oursItemId].oursItemImg)" alt="Записная книжка" />
+        <img
+            class="ours__block_img"
+            :src="imgUrl(ours[i.oursItemId].oursItemImg)"
+            alt="Записная книжка"
+        />
         <div class="ours__block_link">Перейти</div>
       </a>
     </div>
@@ -35,9 +39,17 @@
   <div class="leaders padding">
     <h2 class="leaders__title">Лидеры продаж</h2>
     <div class="leaders__body">
-      <div v-for="product in GET_PRODUCT_LIST" class="leaders__block" v-if="product.productLeader">
+      <div
+          class="leaders__block"
+          v-for="product in GET_PRODUCT_LIST"
+          v-if="product.productLeader"
+      >
         <div  class="leaders__block_top">
-          <img class="leaders__block_img" :src="product.productImg" alt="Жимолость" />
+          <img
+              class="leaders__block_img"
+              :src="product.productImg"
+              alt="Жимолость"
+          />
           <div class="leaders__block_text">
             <router-link class="leaders__block_name" :to="`/catalog/${product.productLatin}`">{{ product.productName }}</router-link>
             <div class="leaders__block_price"> {{ product.productPrice }} ₽</div>
@@ -51,11 +63,13 @@
         </div>
       </div>
 
-
-
-
       <router-link to="/catalog/" class="leaders__block leaders__block_orange">
-        <div class="leaders__block_top"><img class="leaders__block_img" src="../assets/img/leader__6.png" alt="Корзина" /></div>
+        <div class="leaders__block_top">
+          <img
+              class="leaders__block_img"
+              src="../assets/img/leader__6.png"
+              alt="Корзина" />
+        </div>
         <div class="leaders__block_toggle-bot">
           <div class="leaders__block_add">
             <div class="leaders__block_catalog">перейти в каталог</div>
@@ -69,42 +83,48 @@
 
   <div class="adv padding">
     <div v-for="i in adv" class="adv__block">
-      <div class="adv__block_wrapper"><img class="adv__block_img" :src="imgUrl(adv[i.advItemId].advImg)" :alt="i.advImgAlt" /></div>
+      <div class="adv__block_wrapper">
+        <img
+            class="adv__block_img"
+            :src="imgUrl(adv[i.advItemId].advImg)"
+            :alt="i.advImgAlt"
+        />
+      </div>
       <div class="adv__block_title">{{ i.advItemName }}</div>
       <div class="adv__block_descr">{{ i.advItemDescr }}</div>
     </div>
   </div>
 
 
-  <div class="swiper-container padding">
+  <swiper ref="mySwiper" >
     <div v-for="i in slider" class="swiper-wrapper">
       <div class="swiper-slide">
-        <img :src="imgUrl(slider[i.sliderId].sliderImg)" :alt="slider[i.sliderId].sliderAlt" />
+        <img
+            :src="imgUrl(slider[i.sliderId].sliderImg)"
+            :alt="slider[i.sliderId].sliderAlt"
+        />
       </div>
     </div>
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
-  </div>
+  </swiper>
 
 
   <div class="articles padding">
     <h2 class="articles__title">Статьи для садоводов</h2>
     <div class="articles__body">
-      <a v-for="i in articles" class="articles__block" href="#">
-        <img class="articles__block_img" :src="imgUrl(articles[i.articleId].articleImg)" :alt="articles[i.articleId].articleName"/>
+      <router-link
+          class="articles__block"
+          v-for="i in articles"
+          :to="i.articleLink"
+      >
+        <img
+            class="articles__block_img"
+            :src="imgUrl(articles[i.articleId].articleImg)"
+            :alt="articles[i.articleId].articleName"
+        />
         <div class="articles__block_title">{{ i.articleName }}</div>
         <div class="articles__block_desct">{{ i.articleDescr }}</div>
         <div class="articles__block_link">Читать статью</div>
-      </a>
-    </div>
-    <div class="articles__more">
-      <div class="articles__wrapper">
-        <p class="articles__show">Показать больше статей</p>
-        <div class="articles__arrows">
-          <div class="articles__arrow"> </div>
-          <div class="articles__arrow_bot articles__arrow"></div>
-        </div>
-      </div>
+      </router-link>
     </div>
   </div>
 
@@ -113,21 +133,32 @@
     <h2 class="about__title">О сети магазинов Дарвин</h2>
     <div class="about__body">
       <div class="about__text">{{ about[0].aboutDescr }}</div>
-      <img class="about__img" :src="imgUrl(about[0].aboutImg)" alt="Производство" />
+      <img
+          class="about__img"
+          :src="imgUrl(about[0].aboutImg)"
+          alt="Производство"
+      />
     </div>
   </div>
 
+
+  <div
+      class="add-product-popup"
+      :class="{'add-product-popup__active' : addToCartFlag}"
+  >
+    Товар добавлен в корзину
+  </div>
 
 </div>
 </template>
 
 <script>
-import Vue from 'vue'
+import Vue from 'vue';
 import Vuex from "vuex";
-import VueAwesomeSwiper from 'vue-awesome-swiper'
-import 'swiper/swiper-bundle.css'
+import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper';
+import 'swiper/swiper-bundle.css';
 
-Vue.use(Vuex, VueAwesomeSwiper)
+Vue.use(Vuex);
 
 import Cart from "./Cart";
 import {mapGetters, mapActions} from 'vuex';
@@ -135,14 +166,18 @@ import {mapGetters, mapActions} from 'vuex';
 
 
 
-let images = require.context('../assets/img/', false, /\.png|jpg|svg|webp$/) //Переменная для корректного использования
+let images = require.context('../assets/img/', false, /\.png|jpg|svg|webp$/); //Переменная для корректного использования
                                                                              //относительного пути к картинкам
 
 export default {
   name: "main",
   components: {
     Cart,
-
+    Swiper,
+    SwiperSlide
+  },
+  directives: {
+    swiper: directive
   },
   data() {
     return{
@@ -151,10 +186,8 @@ export default {
         nameDescription: 'Садовые гипермаркеты',
         phones: ['+7-495-792-44-44', '+7-800-775-04-24']
       },
-      headerNav: ['О нас', 'Акции', 'Доставка', 'Отзывы', 'Партнерам', 'Контакты'],
-      footerNav: ['Каталог', 'О нас', 'Акции', 'Доставка', 'Отзывы', 'Партнерам', 'Вакансии', 'FAQ', 'Контакты'],
       promo: {
-        promoPeriod: 'Весь май',
+        promoPeriod: 'Весь июнь',
         promoDescr: 'скидка 15% на комнатные растения',
         promoLinkText: 'перейти в каталог',
         promoLink: '#',
@@ -419,25 +452,29 @@ export default {
           oursItemId: 0,
           oursItemName: 'Интерактивный календарь садовника',
           oursItemImg: 'book.png',
-          oursItemImgAlt: 'Записная книжка'
+          oursItemImgAlt: 'Записная книжка',
+          oursItemLink: 'https://mazirov.ru/online-servisy/gardener-calendar/'
         },
         {
           oursItemId: 1,
-          oursItemName: 'Наши мастер классы',
+          oursItemName: 'Мастер классы',
           oursItemImg: 'pencil.png',
-          oursItemImgAlt: 'Карандаши'
+          oursItemImgAlt: 'Карандаши',
+          oursItemLink: 'https://mirnov.ru/master-sadovod'
         },
         {
           oursItemId: 2,
           oursItemName: 'Мы в инстаграм',
           oursItemImg: 'notebook.png',
-          oursItemImgAlt: 'Открытый ноутбук'
+          oursItemImgAlt: 'Открытый ноутбук',
+          oursItemLink: 'https://www.instagram.com/'
         },
         {
           oursItemId: 3,
           oursItemName: 'Наш канал на YouTube',
           oursItemImg: 'notebookClose.png',
-          oursItemImgAlt: 'Закрытый ноутбук'
+          oursItemImgAlt: 'Закрытый ноутбук',
+          oursItemLink: 'https://www.youtube.com/'
         }
       ],
       adv: [
@@ -488,7 +525,8 @@ export default {
           sliderId: 4,
           sliderImg: 'partner__5.png',
           sliderAlt: 'Щедрая земля'
-        }
+        },
+
       ],
       articles: [
         {
@@ -496,21 +534,21 @@ export default {
           articleName: 'Базилик',
           articleDescr: 'Базилик – это однолетнее растение, семейства Яснотковые. История этого растения началась в Индии, там...',
           articleImg: 'article__1.jpg',
-          articleLink: '#'
+          articleLink: 'basil'
         },
         {
           articleId: 1,
           articleName: 'Сикомора',
           articleDescr: 'Сикомор – это дерево, которое может вырасти от 18 до 40 метров и может прожить от 600 до 1200 лет...',
           articleImg: 'article__2.jpg',
-          articleLink: '#'
+          articleLink: 'sycamore'
         },
         {
           articleId: 2,
           articleName: 'Можжевельник китайский',
           articleDescr: 'Можжевельник китайский и можжевельник средний очень часто путают и воспринимают как синонимы...',
           articleImg: 'article__3.jpg',
-          articleLink: '#'
+          articleLink: 'juniper'
         }
       ],
       about: [
@@ -554,7 +592,8 @@ export default {
           payMethodImg: 'visa.svg',
           payMethodImgAlt: 'Visa'
         }
-      ]
+      ],
+      addToCartFlag: false
     }
   },
   methods: {
@@ -569,23 +608,22 @@ export default {
       if (!this.CART.includes(currentProduct)) {
         this.$set(currentProduct, 'productCount', 1)
         this.ADD_TO_CART(currentProduct)
+        this.addToCartFlag = true
+        setTimeout(() => this.addToCartFlag = false, 1000)
       } else {
         this.ADD_TO_CART(currentProduct)
       }
     },
-
-
     imgUrl: function (path) {     //Функция для доступа к картинкам через относительный путь
       return images('./' + path)
     },
-
   },
   computed: {
     ...mapGetters([
       'CART',
       'PRODUCTS',
       'GET_PRODUCT_LIST'
-    ])
+    ]),
   }
 }
 </script>
@@ -619,6 +657,18 @@ a
   text-decoration: none
   color: inherit
 
+p
+  margin-bottom: 20px
+
+h1
+  margin-bottom: 30px
+
+h2
+  font-size: 3rem
+
+h3
+  margin-bottom: 20px
+  margin-top: 30px
 
 .fa-shopping-basket
   color: white
@@ -864,6 +914,7 @@ a
   &__title
     margin-bottom: 65px
   &__body
+    padding: 10px
     display: flex
     justify-content: space-between
     flex-wrap: wrap
@@ -894,7 +945,7 @@ a
       max-width: 350px
       width: 100%
     &_img
-      width: 20vw
+      width: 18vw
       @media ( max-width: 1180px )
         width: 30vw
       @media ( max-width: 880px )
@@ -975,112 +1026,7 @@ a
     margin-bottom: 65px
 
 
-.basket
-  display: flex
-  flex-direction: column
-  justify-content: space-between
-  overflow: auto
-  background-color: #fff
-  width: 90%
-  height: 80%
-  box-shadow: 0 0 13px 0 rgba(0,0,0,1)
-  position: absolute
-  top: 5%
-  left: 5%
-  color: white
-  @media ( max-width: 1180px )
-    width: 100vw
-    height: 90vh
-    top: 0
-    left: 0
-  &-wrapper
-    display: none
-    top: 0
-    left: 0
-    position: fixed
-    width: 100vw
-    height: 100vh
-    z-index: 100
-    background-color: rgba(0,0,0,0.2)
-  & img
-    width: 70%
-  &__head
-    background-color: $orange
-    display: flex
-    justify-content: space-between
-    align-items: center
-    padding: 5px 5%
-    position: sticky
-    left: 0
-    top: 0
-  &__param
-    display: flex
-    justify-content: space-between
-    text-align: center
-    padding: 5px 5%
-    border-bottom: 1px solid $orange
-  &__body
-    height: 100%
-    padding: 5px 5% 5px 5%
-    &-item
-      width: 100%
-      display: flex
-      align-items: center
-      justify-content: space-between
-      text-align: center
-      & div
-        flex: 1
-  &__footer
-    background-color: $orange
-    display: flex
-    justify-content: space-between
-    align-items: center
-    padding: 15px 5%
-    position: fixed
-    width: 80%
-    left: 5%
-    bottom: 8%
-    @media ( max-width: 1180px )
-      height: 10vh
-      padding: 0 2vw
-      align-items: center
-      left: 0
-      bottom: 0
-      width: 96vw
-  &__close, &__delete
-    & img
-      width: 20px
-      cursor: pointer
-  &__sum
-    font-weight: 700
-    color: $orange
-  &__price
-    font-weight: 500
-  &__name
-    color: #000
 
-.quantity
-  input
-    width: 25%
-    box-sizing: border-box
-    text-align: center
-    outline: none
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button
-      -webkit-appearance: none
-      -moz-appearance: textfield
-      background: #0a377e
-      margin: 0
-
-.fade
-  animation-name: fade
-  animation-duration: 0.25s
-
-@keyframes fade
-  from
-    opacity: 0.1
-  to
-    opacity: 1
 
 ::-webkit-scrollbar
   background-color: #f5f5f5
@@ -1089,5 +1035,20 @@ a
   background-color: $green
   border-radius: 10px
 
+
+.add-product-popup
+  position: fixed
+  z-index: 100
+  top: -50px
+  right: 5px
+  display: block
+  padding: 10px
+  background-color: $orange
+  color: #fff
+  font-weight: 500
+  border-radius: 10px
+  transition: all 0.5s
+  &__active
+    top: 5px
 
 </style>
