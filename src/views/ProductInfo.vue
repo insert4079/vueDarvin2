@@ -99,8 +99,14 @@ $grey: #f3f3f6
     display: flex
     justify-content: space-between
     margin-bottom: 100px
+    @media (max-width: 500px)
+      flex-direction: column-reverse
+      align-items: center
   &__text
     width: 50%
+    @media (max-width: 500px)
+      width: 100%
+      text-align: center
     & p
       margin: 20px 0
   &__btn

@@ -3,7 +3,7 @@
     <h1>Корзина</h1>
     <div class="cart__block" v-for="(i, index) in CART">
       <div class="cart__block-item">
-        <h2>{{ i.productName }}</h2>
+        <h3>{{ i.productName }}</h3>
         <p>Цена: {{i.productPrice}}</p>
       </div>
       <div class="cart__block-item cart__img-wrapper" >
@@ -79,16 +79,16 @@ $grey: #f3f3f6
       flex-direction: column
       justify-content: center
       align-items: center
-    & h2
+    & h3
       text-align: center
     &-btn
       &-svg
-        width: 50px
+        width: 30px
         fill: $orange
         cursor: pointer
   &__img
-    width: 100%
-    height: 100%
+    max-width: 80%
+    max-height: 80%
     object-fit: cover
     object-position: 0 0
     &-wrapper
@@ -103,10 +103,13 @@ $grey: #f3f3f6
     font-weight: 500
     color: $orange
   &__more-less
+    @media (max-width: 500px)
+      display: flex
+      flex-direction: column
     & button
       border: none
       background-color: $orange
-      padding: 5px 10px
+      padding: 4px 9px
       border-radius: 5px
       color: #fff
       cursor: pointer

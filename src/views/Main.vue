@@ -625,7 +625,8 @@ export default {
       'GET_PRODUCT_LIST'
     ]),
   }
-}
+};
+
 </script>
 
 <style lang="sass">

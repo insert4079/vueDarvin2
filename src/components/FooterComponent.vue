@@ -239,6 +239,8 @@ a
     display: flex
     justify-content: space-between
     margin-bottom: 30px
+    @media ( max-width: 500px )
+      width: 30%
   &__card
     width: 40px
     fill: #fff

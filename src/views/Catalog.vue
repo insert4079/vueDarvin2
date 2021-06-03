@@ -2,9 +2,16 @@
   <div class="catalog padding">
     <h1>Каталог</h1>
 
+    <div class="catalog__sort-wrapper">
+      <span class="catalog__sort" @click="sortFlag = ''">Все</span>
+      <span class="catalog__sort" @click="sortFlag = 'plant'">Растения</span>
+      <span class="catalog__sort" @click="sortFlag = 'plantCare'">Уход за растениями</span>
+      <span class="catalog__sort" @click="sortFlag = 'inventory'">Инструмент, инвентарь</span>
+    </div>
+
     <div class="catalog__block">
-      <template v-for="productName in GET_PRODUCT_LIST">
-        <router-link  class="catalog__link" :to="`/catalog/${productName.productLatin}`">
+      <template v-for="productName in sort">
+        <router-link class="catalog__link" :to="`/catalog/${productName.productLatin}`">
           <div class="catalog__img-wrap">
             <img
                 class="catalog__img"
@@ -15,6 +22,25 @@
         </router-link>
       </template>
     </div>
+
+
+
+
+
+
+<!--    <div class="catalog__block">-->
+<!--      <template v-for="productName in GET_PRODUCT_LIST">-->
+<!--        <router-link class="catalog__link" :to="`/catalog/${productName.productLatin}`">-->
+<!--          <div class="catalog__img-wrap">-->
+<!--            <img-->
+<!--                class="catalog__img"-->
+<!--                :src="productName.productImg"-->
+<!--                :alt="productName.productName">-->
+<!--          </div>-->
+<!--          <p class="catalog__name">{{ productName.productName }}</p>-->
+<!--        </router-link>-->
+<!--      </template>-->
+<!--    </div>-->
 
 
 
@@ -34,7 +60,8 @@ export default {
 
   data(){
     return{
-      result: []
+      result: [],
+      sortFlag: ''
     }
   },
   methods: {},
@@ -45,7 +72,19 @@ export default {
         'GET_PRODUCT_LIST',
     ]),
     productId(){
-      return this.GET_PRODUCT_LIST.productLatin;
+      this.GET_PRODUCT_LIST.productLatin;
+    },
+
+    sort: function (){
+      let result = []
+      for (let i = 0; i < this.GET_PRODUCT_LIST.length; i++){
+        if (this.GET_PRODUCT_LIST[i].productParentGroup === this.sortFlag){
+          result.push(this.GET_PRODUCT_LIST[i])
+        } else if (!this.sortFlag){
+          return this.GET_PRODUCT_LIST
+        }
+      }
+      return result
     }
   }
 }
@@ -69,6 +108,12 @@ h1
     margin-right: 5px
     &:hover
       color: $orange
+  &__block
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    @media (max-width: 640px)
+      justify-content: center
   &__img
     width: 90%
     height: 90%
@@ -84,4 +129,16 @@ h1
   &__name
     font-weight: 500
     padding-left: 13px
+  &__sort
+    cursor: pointer
+    font-size: 1.5rem
+    &:hover
+      color: $orange
+    &-wrapper
+      max-width: 500px
+      display: flex
+      justify-content: space-between
+      margin-bottom: 30px
+      margin-top: -20px
+
 </style>

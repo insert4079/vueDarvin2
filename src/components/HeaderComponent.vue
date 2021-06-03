@@ -31,63 +31,66 @@
 
 
   <nav class="nav padding">
-    <div
+    <router-link
         class="nav__menu"
-        @mouseenter="catalogFlag = true"
-        @mouseleave="catalogFlag = false"
+        to="/catalog/"
     >
-      <div class="nav__menu_text">каталог</div>
+        <span class="nav__menu_text">каталог</span>
+<!--        @mouseenter="catalogFlag = true"-->
+<!--        @mouseleave="catalogFlag = false"-->
+<!--    >-->
 
 
-      <ul
-          class="nav__tree tree"
-          v-show="catalogFlag"
-      >  <!--Выпадающий список (гребаный ад)-->
-        <li
-            class="tree__menu-item"
-            v-for="i in fallingCatalog"
-            @mouseenter="subCatalogFlag = true"
-            @mouseleave="subCatalogFlag = false"
-        >
-          {{ i.groupName }}
 
-          <ul
-              class="tree__menu-subitem"
-              v-show="subCatalogFlag"
-          >
-            <li
+<!--      <ul-->
+<!--          class="nav__tree tree"-->
+<!--          v-show="catalogFlag"-->
+<!--      >  &lt;!&ndash;Выпадающий список (гребаный ад)&ndash;&gt;-->
+<!--        <li-->
+<!--            class="tree__menu-item"-->
+<!--            v-for="i in fallingCatalog"-->
+<!--            @mouseenter="subCatalogFlag = true"-->
+<!--            @mouseleave="subCatalogFlag = false"-->
+<!--        >-->
+<!--          {{ i.groupName }}-->
 
-                @mouseenter="subSubCatalogFlag = true"
-                @mouseleave="subSubCatalogFlag = false"
-                v-for="j in i.subGroup"
-            >
-              {{ j.subGroupName }}
+<!--          <ul-->
+<!--              class="tree__menu-subitem"-->
+<!--              v-show="subCatalogFlag"-->
+<!--          >-->
+<!--            <li-->
 
-              <ul
-                  class="tree__menu-subsubitem"
-                  v-for="k in j.subGroupList"
-                  v-show="subSubCatalogFlag"
-              >
-                <li
-                    @mouseenter="productFlag = true"
-                    @mouseleave="productFlag = false"
-                >
-                  {{ k.subGroupListName }}
-                  <ul
-                      v-show="productFlag"
-                      v-for="hey in k.productList"
-                  >
-                    <li>
-                      <router-link :to="`/catalog/${hey.productLatin}/`">{{ hey.productName }}</router-link>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </div>
+<!--                @mouseenter="subSubCatalogFlag = true"-->
+<!--                @mouseleave="subSubCatalogFlag = false"-->
+<!--                v-for="j in i.subGroup"-->
+<!--            >-->
+<!--              {{ j.subGroupName }}-->
+
+<!--              <ul-->
+<!--                  class="tree__menu-subsubitem"-->
+<!--                  v-for="k in j.subGroupList"-->
+<!--                  v-show="subSubCatalogFlag"-->
+<!--              >-->
+<!--                <li-->
+<!--                    @mouseenter="productFlag = true"-->
+<!--                    @mouseleave="productFlag = false"-->
+<!--                >-->
+<!--                  {{ k.subGroupListName }}-->
+<!--                  <ul-->
+<!--                      v-show="productFlag"-->
+<!--                      v-for="hey in k.productList"-->
+<!--                  >-->
+<!--                    <li>-->
+<!--                      <router-link :to="`/catalog/${hey.productLatin}/`">{{ hey.productName }}</router-link>-->
+<!--                    </li>-->
+<!--                  </ul>-->
+<!--                </li>-->
+<!--              </ul>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--        </li>-->
+<!--      </ul>-->
+    </router-link>
 
 
     <div class="nav__search">
@@ -117,23 +120,23 @@
       </form>
 
       <div class="nav__icons">
-        <router-link class="nav__icon-item" to="/catalog/">
-          <svg id="Capa_1" enable-background="new 0 0 511.977 511.977" viewBox="0 0 511.977 511.977"
-               xmlns="http://www.w3.org/2000/svg" >
-            <g>
-              <path d="m498.237 366.527-114.499-114.527c21.484-48.774 12.291-107.913-27.594-147.808-51.966-51.978-136.081-51.985-188.053
-              0-51.844 51.856-51.844 136.232 0 188.088 41.198 41.207 101.574 49.053 149.773 26.771l113.914 113.941c18.366 18.37 48.097
-              18.372 66.463-.004 18.316-18.324 18.314-48.138-.004-66.461zm-308.931-95.458c-40.151-40.16-40.151-105.505 0-145.666
-              40.24-40.25 105.375-40.257 145.622 0 40.151 40.161 40.151 105.506 0 145.666-40.241 40.251-105.376 40.257-145.622
-              0zm287.717 140.711c-6.64 6.643-17.388 6.646-24.03.001l-108.834-108.86c8.946-7.042 16.919-15.128 23.842-24.23l109.02
-              109.046c6.627 6.629 6.628 17.414.002 24.043z"/><path d="m15 244.947h63.962c8.284 0
-              15-6.716 15-15s-6.716-15-15-15h-63.962c-8.284 0-15 6.716-15 15s6.716 15 15 15z"/>
-              <path d="m15 308.947h87.948c8.284 0 15-6.716 15-15s-6.716-15-15-15h-87.948c-8.284 0-15 6.716-15 15s6.716 15 15 15z"/>
-              <path d="m15 372.947h151.911c8.284 0 15-6.716 15-15s-6.716-15-15-15h-151.911c-8.284 0-15 6.716-15 15s6.716 15 15 15z"/>
-              <path d="m342.809 406.947h-327.809c-8.284 0-15 6.716-15 15s6.716 15 15 15h327.809c8.284 0 15-6.716 15-15s-6.716-15-15-15z"/>
-            </g>
-          </svg>
-        </router-link>
+<!--        <router-link class="nav__icon-item" to="/catalog/">-->
+<!--          <svg id="Capa_1" enable-background="new 0 0 511.977 511.977" viewBox="0 0 511.977 511.977"-->
+<!--               xmlns="http://www.w3.org/2000/svg" >-->
+<!--            <g>-->
+<!--              <path d="m498.237 366.527-114.499-114.527c21.484-48.774 12.291-107.913-27.594-147.808-51.966-51.978-136.081-51.985-188.053-->
+<!--              0-51.844 51.856-51.844 136.232 0 188.088 41.198 41.207 101.574 49.053 149.773 26.771l113.914 113.941c18.366 18.37 48.097-->
+<!--              18.372 66.463-.004 18.316-18.324 18.314-48.138-.004-66.461zm-308.931-95.458c-40.151-40.16-40.151-105.505 0-145.666-->
+<!--              40.24-40.25 105.375-40.257 145.622 0 40.151 40.161 40.151 105.506 0 145.666-40.241 40.251-105.376 40.257-145.622-->
+<!--              0zm287.717 140.711c-6.64 6.643-17.388 6.646-24.03.001l-108.834-108.86c8.946-7.042 16.919-15.128 23.842-24.23l109.02-->
+<!--              109.046c6.627 6.629 6.628 17.414.002 24.043z"/><path d="m15 244.947h63.962c8.284 0-->
+<!--              15-6.716 15-15s-6.716-15-15-15h-63.962c-8.284 0-15 6.716-15 15s6.716 15 15 15z"/>-->
+<!--              <path d="m15 308.947h87.948c8.284 0 15-6.716 15-15s-6.716-15-15-15h-87.948c-8.284 0-15 6.716-15 15s6.716 15 15 15z"/>-->
+<!--              <path d="m15 372.947h151.911c8.284 0 15-6.716 15-15s-6.716-15-15-15h-151.911c-8.284 0-15 6.716-15 15s6.716 15 15 15z"/>-->
+<!--              <path d="m342.809 406.947h-327.809c-8.284 0-15 6.716-15 15s6.716 15 15 15h327.809c8.284 0 15-6.716 15-15s-6.716-15-15-15z"/>-->
+<!--            </g>-->
+<!--          </svg>-->
+<!--        </router-link>-->
         <router-link class="nav__icon-cart" to="/basket/">
           <div class="nav__icon-item ">
             <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
@@ -276,6 +279,10 @@ a
   display: flex
   justify-content: space-between
   align-items: center
+  &__burger
+    display: none
+    @media ( max-width: 880px )
+      display: block
   @media ( max-width: 880px )
     padding-top: 45px
     padding-bottom: 15px
@@ -291,11 +298,11 @@ a
       display: none
       flex-direction: column
       position: absolute
-      top: 80%
+      top: 100%
       right: 0
       z-index: 199
-      width: 150px
-      height: 0
+      width: 100%
+      background-color: #fff
   &__link
     &:hover
       color: $orange
@@ -308,10 +315,7 @@ a
       &:hover
         background-color: $orange
         color: #fff
-  &__burger
-    display: none
-    @media ( max-width: 880px )
-      display: block
+
   &__name
     text-transform: uppercase
     color: $green
@@ -321,6 +325,7 @@ a
     font-weight: 700
     display: block
     font-size: 1.7rem
+
   &__contact
     @media ( max-width: 1180px )
       display: none
@@ -331,6 +336,8 @@ a
     @media ( max-width: 880px )
       width: 5%
     &:hover
+      .header__links
+        display: flex
       .top
         transform: rotate(45deg)
       .middle
@@ -356,7 +363,7 @@ a
 
 .nav
   display: flex
-  justify-content: space-between
+  justify-content: space-around
   background-color: $green
   height: 100px
   align-items: center
@@ -377,9 +384,9 @@ a
     cursor: pointer
     position: relative
     @media ( max-width: 500px )
-      width: 100vw
+      width: 98vw
       padding: 10px 0
-      margin-bottom: 10px
+      //margin-bottom: 10px
       justify-content: center
     &_text
       color: white
@@ -392,9 +399,9 @@ a
     justify-content: space-around
     align-items: center
     padding-left: 20px
-    width: 100%
+    flex-grow: 2
     @media ( max-width: 500px )
-      width: 80%
+      width: 98vw
       justify-content: center
       padding: 0
     input[type="search"]
@@ -408,7 +415,7 @@ a
       border-radius: 5px
       width: 50vw
       @media ( max-width: 500px )
-        width: 80vw
+        width: 85vw
       &::placeholder
         color: white
         font-size: 1.8rem
@@ -423,6 +430,9 @@ a
       position: absolute
       top: 157%
       left: 0
+      @media (max-width: 500px)
+        width: 100%
+        top: 100%
     &-link
       display: block
       width: 50vw
@@ -430,6 +440,8 @@ a
       background-color: $grey
       border-bottom: 3px white solid
       transition: all 0.3s
+      @media (max-width: 500px)
+        width: 100%
       &:hover
         color: #fff
         background-color: $orange
@@ -465,21 +477,4 @@ a
     border-radius: 100%
     cursor: pointer
     color: #fff
-
-.tree
-  position: absolute
-  top: 100%
-  left: 0
-  &__menu
-    &-item
-      border: 1px solid black
-      background-color: #fff
-    &-subitem
-      position: absolute
-      top: 0
-      left: 100%
-    &-subsubitem
-      position: absolute
-      top: 0
-      left: 270%
 </style>
