@@ -15,9 +15,9 @@
       </div>
       <div class="cart__block-item">
         <div class="cart__more-less">
-          <button @click="i.productCount++">+</button>
+          <button @click="i.productCount++; setInfoInLocalStorage()">+</button>
           <span class="cart__count">{{ i.productCount }}</span>
-          <button @click="i.productCount--; deleteFromCartIf0(index)" >-</button> <!--Удаляем элемент, если его каунтер достиг нуля-->
+          <button @click="i.productCount--; deleteFromCartIf0(index); setInfoInLocalStorage()" >-</button> <!--Удаляем элемент, если его каунтер достиг нуля-->
         </div>
         <div class="cart__summ">{{ i.productPrice * i.productCount }}</div>
       </div>
@@ -43,13 +43,17 @@ export default {
   methods: {
     ...mapActions([
         'DELETE_FROM_CART',
-        'DELETE_FROM_CART_IF_COUNT_0'
+        'DELETE_FROM_CART_IF_COUNT_0',
+        'SET_INFO_IN_LOCALSTORAGE'
     ]),
     deleteFromCart: function (index){
       this.DELETE_FROM_CART(index);
     },
     deleteFromCartIf0: function (index){
       this.DELETE_FROM_CART_IF_COUNT_0(index);
+    },
+    setInfoInLocalStorage: function (){
+      this.SET_INFO_IN_LOCALSTORAGE();
     }
   },
   computed: {

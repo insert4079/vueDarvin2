@@ -23,28 +23,6 @@
       </template>
     </div>
 
-
-
-
-
-
-<!--    <div class="catalog__block">-->
-<!--      <template v-for="productName in GET_PRODUCT_LIST">-->
-<!--        <router-link class="catalog__link" :to="`/catalog/${productName.productLatin}`">-->
-<!--          <div class="catalog__img-wrap">-->
-<!--            <img-->
-<!--                class="catalog__img"-->
-<!--                :src="productName.productImg"-->
-<!--                :alt="productName.productName">-->
-<!--          </div>-->
-<!--          <p class="catalog__name">{{ productName.productName }}</p>-->
-<!--        </router-link>-->
-<!--      </template>-->
-<!--    </div>-->
-
-
-
-
   </div>
 </template>
 

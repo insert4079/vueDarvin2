@@ -920,7 +920,6 @@ h3
     justify-content: space-between
     flex-wrap: wrap
     overflow: hidden
-    height: 600px
     &_full
       height: 100%
     @media ( max-width: 880px )
@@ -1009,6 +1008,7 @@ h3
       flex-direction: column
   &__text
     width: 45%
+    margin-bottom: 30px
     @media ( max-width: 1180px )
       width: 100%
   &__text

@@ -60,7 +60,7 @@ export default {
         this.$set(this.getCurrentProduct, 'productCount', 1) //Добавление количества продукта в корзине и реактивности этого значения
         this.ADD_TO_CART(this.getCurrentProduct);
         this.addToCartFlag = true;
-        setTimeout(() => this.addToCartFlag = false, 1000)
+        setTimeout(() => this.addToCartFlag = false, 1000);
       } else{
         this.ADD_TO_CART(this.getCurrentProduct);
       }

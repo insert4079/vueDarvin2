@@ -2,13 +2,10 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VueRouter from "vue-router";
 
-
-
-
 Vue.use(Vuex)
 Vue.use(VueRouter)
 
-
+let cart = window.localStorage.getItem('cart'); //получаем массив cart из storage
 
 let store = new Vuex.Store({
   state: {
@@ -391,7 +388,7 @@ let store = new Vuex.Store({
         ]
       }
     ],
-    cart: []
+    cart: cart ? JSON.parse(cart) : [], //проверяем нет ли чего-нибудь в localstorage. Если есть - запихиваем эту инфу в массив cart
   },
   getters: {
     PRODUCTS(state){
@@ -430,37 +427,43 @@ let store = new Vuex.Store({
         state.cart.map(function (item){
           if (item.productLatin === product.productLatin){
             isProductExistts = true;
-            item.productCount++
+            item.productCount++;
           }
         })
         if(!isProductExistts){
-          state.cart.push(product)
+          state.cart.push(product);
         }
       } else {
-        state.cart.push(product)
+        state.cart.push(product);
       }
     },
     REMOVE_FROM_CART: (state, index) =>{
-      state.cart.splice(index, 1)
+      state.cart.splice(index, 1);
     },
-
+    SAVE_CART_TO_LOCALSTORAGE(state) { //сохраняем инфу в локалсторедж
+      window.localStorage.setItem('cart', JSON.stringify(state.cart));
+    }
   },
   actions: {
     ADD_TO_CART({commit}, product){
-      commit('SET_CART', product)
+      commit('SET_CART', product);
+      commit('SAVE_CART_TO_LOCALSTORAGE');
     },
     DELETE_FROM_CART({commit}, index){
-      commit('REMOVE_FROM_CART', index)
+      commit('REMOVE_FROM_CART', index);
+      commit('SAVE_CART_TO_LOCALSTORAGE');
     },
     GET_CURRENT_PRODUCT(){
-      return this.GET_PRODUCT_LIST.find(e => e.productLatin === this.productId)
+      return this.GET_PRODUCT_LIST.find(e => e.productLatin === this.productId);
     },
     DELETE_FROM_CART_IF_COUNT_0({commit}, index){
-      // console.log(this.state.cart[index].productCount)
       if(!this.state.cart[index].productCount){
-        commit('REMOVE_FROM_CART', index)
+        commit('REMOVE_FROM_CART', index);
+        commit('SAVE_CART_TO_LOCALSTORAGE');
       }
-
+    },
+    SET_INFO_IN_LOCALSTORAGE({commit}){ //нужен для использования на странице корзины
+      commit('SAVE_CART_TO_LOCALSTORAGE');
     }
   },
   modules: {
